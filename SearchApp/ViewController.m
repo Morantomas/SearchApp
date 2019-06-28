@@ -13,22 +13,17 @@
 #import "MeliDevAsyncHttpOperation.h"
 #import "MeliDevSyncHttpOperation.h"
 #import "MeliDevErrors.h"
+#import "MBProgressHUD.h"
 
 static NSString * CLIENT_ID_VALUE = @"5197208004815569";
 static NSString * REDIRECT_URL_VALUE = @"https://www.example.com";
 
-//@interface MeliDevSDKExampleViewController ()
-//
-//@property MeliDevIdentity *identity;
-//
-//@property (copy) NSString * result;
-//@property (nonatomic) NSError * error;
-
 @interface ViewController () {
     NSString *cellIdentifier;
 }
-@property MeliDevIdentity *identity;
 
+@property MeliDevIdentity *identity;
+@property (strong, nonatomic) MBProgressHUD *HUD;
 @property (copy) NSString * result;
 @property (nonatomic) NSError * error;
 
@@ -39,80 +34,88 @@ static NSString * REDIRECT_URL_VALUE = @"https://www.example.com";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    if ([self initMeli]) {
+        
+        self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        self.HUD.layer.zPosition = 1;
+        
+        [self makeGetRequestWithLoops:10]; // Quantity of elements to search
+        
+        self.navigationItem.title = @"Test SearchBar";
+        //    self.navigationController.navigationBar.prefersLargeTitles = YES;
+        
+        self.elementos = [NSMutableArray arrayWithArray:@[@"Miguel",@"Erik",@"Pedro",@"Victor",@"Juanpe",@"Javi",@"Sendoa"]];
+        
+        self.tableView.dataSource = self;
+        self.tableView.delegate = self;
+        
+        [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+        
+    } else {
+        
+    }
+}
+
+#pragma Mark: SDK Meli
+- (BOOL) initMeli {
     NSError *error;
+    
     [Meli initializeSDK: CLIENT_ID_VALUE withRedirectUrl: REDIRECT_URL_VALUE error:&error];
     
-//    [self ];
     if(error) {
         NSLog(@"Domain: %@", error.domain);
         NSLog(@"Error Code: %ld", error.code);
         NSLog(@"Description: %@", [error localizedDescription]);
     }
     
-    [self getUsersItemsAsync];
-    
-    self.navigationItem.title = @"Test SearchBar";
-//    self.navigationController.navigationBar.prefersLargeTitles = YES;
-    
-    self.elementos = [NSMutableArray arrayWithArray:@[@"Miguel",@"Erik",@"Pedro",@"Victor",@"Juanpe",@"Javi",@"Sendoa"]];
-    
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
-    
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
-    
+    return error ? NO : YES;
 }
 
-- (void) getUsersItemsAsync {
+- (void) makeGetRequestWithLoops:(NSInteger)Loops {
     
-    MeliDevIdentity * identity = [Meli getIdentity];
+    long numberForItems = 778950852;
+    NSString *path = @"/items?ids=MLA778950852";
     
-    if(identity) {
-        
-        NSString *userPath = [@"/users/" stringByAppendingString: identity.userId];
-        NSString *path = [userPath stringByAppendingString: @"/items/search"];
-        
-        AsyncHttpOperationSuccessBlock successBlock = ^(NSURLSessionTask *task, id responseObject) {
-            [self parseData:responseObject];
-        };
-        
-        AsyncHttpOperationFailBlock failureBlock = ^(NSURLSessionTask *operation, NSError *error) {
-            if(error) {
-                [self processError:operation error:error];
-            }
-        };
-        
-        [Meli asyncGetAuth:path withIdentity: identity successBlock:successBlock failureBlock:failureBlock];
+//    /items?ids=MLA778950852,MLA778950853
+    
+    for ( int i = 1
+         ; i < Loops; i++) {
+        numberForItems += i;
+        NSString* newInt = [NSString stringWithFormat:@"%li", numberForItems];
+        path = [NSString stringWithFormat:@"%@,MLA%@", path, newInt];
     }
+    
+    NSError *error2;
+    NSString * result = [Meli get:path error:&error2];
+    
+    [self processOut:result withError: &error2];
+    
 }
 
-- (void) parseData: (id) responseObject {
+- (void) processOut:(NSString *)result withError:(NSError **)error {
     
-    NSArray *jsonArray = (NSArray *) responseObject;
-    
-    NSError *error;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonArray options:NSJSONWritingPrettyPrinted error:&error];
-    NSString *result = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    
-    NSLog(@"Result %@", result);
-}
-
-- (void) processError: (NSURLSessionTask *) operation error:(NSError *)error {
-    
-    if(operation) {
-        NSURLRequest * request = operation.currentRequest;
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)operation.response;
+    if(*error != nil) {
+        NSLog(@"Http request error %@", [*error userInfo]);
         
-        NSString * requestError = [NSString stringWithFormat: HTTP_REQUEST_ERROR_MESSAGE, [request URL],
-                                   (long)[httpResponse statusCode] ];
-        
-        NSLog(@"Http request error %@", requestError);
     } else {
-        NSLog(@"Error: %@ ", [error userInfo] );
+        NSLog(@"Result %@", result);
+        [self resultToTableViewArray:result];
+        
     }
 }
 
 # pragma mark - methods
+
+- (void) resultToTableViewArray:(NSString*)result {
+    
+    // Convert to JSON object:
+    NSArray *jsonObject = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:0 error:NULL];
+    NSLog(@"jsonObject=%@", jsonObject);
+    
+    self.elementos = [NSMutableArray arrayWithArray:jsonObject];
+}
+
 - (void)searchFilter:(NSString*)searchText
 {
     NSPredicate *predicateSearch = [NSPredicate
