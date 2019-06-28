@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		39C9231E7FA4B58309D4E808 /* libPods-SearchApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C08CC616F027B2835874B51 /* libPods-SearchApp.a */; };
 		7165EEA022C04F900074CA11 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7165EE9F22C04F900074CA11 /* AppDelegate.m */; };
 		7165EEA322C04F900074CA11 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7165EEA222C04F900074CA11 /* ViewController.m */; };
 		7165EEA622C04F900074CA11 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7165EEA422C04F900074CA11 /* Main.storyboard */; };
@@ -15,6 +16,9 @@
 		7165EEAE22C04F910074CA11 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7165EEAD22C04F910074CA11 /* main.m */; };
 		7165EEB822C04F920074CA11 /* SearchAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7165EEB722C04F920074CA11 /* SearchAppTests.m */; };
 		7165EEC322C04F920074CA11 /* SearchAppUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7165EEC222C04F920074CA11 /* SearchAppUITests.m */; };
+		7197236222C59721001DC5B4 /* libAFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7197236122C59721001DC5B4 /* libAFNetworking.a */; };
+		7197236422C59726001DC5B4 /* libMBProgressHUD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7197236322C59726001DC5B4 /* libMBProgressHUD.a */; };
+		7197236622C59729001DC5B4 /* libMeliDevSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7197236522C59729001DC5B4 /* libMeliDevSDK.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		13D2EA6FAED42EAC04F03BA2 /* Pods-SearchApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SearchApp.release.xcconfig"; path = "Target Support Files/Pods-SearchApp/Pods-SearchApp.release.xcconfig"; sourceTree = "<group>"; };
+		4C08CC616F027B2835874B51 /* libPods-SearchApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SearchApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7165EE9B22C04F900074CA11 /* SearchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SearchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7165EE9E22C04F900074CA11 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7165EE9F22C04F900074CA11 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -51,6 +57,10 @@
 		7165EEBE22C04F920074CA11 /* SearchAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SearchAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7165EEC222C04F920074CA11 /* SearchAppUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchAppUITests.m; sourceTree = "<group>"; };
 		7165EEC422C04F920074CA11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7197236122C59721001DC5B4 /* libAFNetworking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libAFNetworking.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7197236322C59726001DC5B4 /* libMBProgressHUD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMBProgressHUD.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7197236522C59729001DC5B4 /* libMeliDevSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMeliDevSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		76F8EC3FE16FC22DAE5BD45F /* Pods-SearchApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SearchApp.debug.xcconfig"; path = "Target Support Files/Pods-SearchApp/Pods-SearchApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +68,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7197236622C59729001DC5B4 /* libMeliDevSDK.a in Frameworks */,
+				7197236422C59726001DC5B4 /* libMBProgressHUD.a in Frameworks */,
+				7197236222C59721001DC5B4 /* libAFNetworking.a in Frameworks */,
+				39C9231E7FA4B58309D4E808 /* libPods-SearchApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +92,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3B2C52E025F0AE07BB2A668E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				76F8EC3FE16FC22DAE5BD45F /* Pods-SearchApp.debug.xcconfig */,
+				13D2EA6FAED42EAC04F03BA2 /* Pods-SearchApp.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		7165EE9222C04F900074CA11 = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +108,8 @@
 				7165EEB622C04F920074CA11 /* SearchAppTests */,
 				7165EEC122C04F920074CA11 /* SearchAppUITests */,
 				7165EE9C22C04F900074CA11 /* Products */,
+				3B2C52E025F0AE07BB2A668E /* Pods */,
+				CFE6BF35CE0DB85ACB69F2C4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -132,6 +157,17 @@
 			path = SearchAppUITests;
 			sourceTree = "<group>";
 		};
+		CFE6BF35CE0DB85ACB69F2C4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7197236522C59729001DC5B4 /* libMeliDevSDK.a */,
+				7197236322C59726001DC5B4 /* libMBProgressHUD.a */,
+				7197236122C59721001DC5B4 /* libAFNetworking.a */,
+				4C08CC616F027B2835874B51 /* libPods-SearchApp.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -139,9 +175,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7165EEC722C04F920074CA11 /* Build configuration list for PBXNativeTarget "SearchApp" */;
 			buildPhases = (
+				43589006373658726757A148 /* [CP] Check Pods Manifest.lock */,
 				7165EE9722C04F900074CA11 /* Sources */,
 				7165EE9822C04F900074CA11 /* Frameworks */,
 				7165EE9922C04F900074CA11 /* Resources */,
+				DD3E5C047E9DDF26A7F5CECD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -256,6 +294,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		43589006373658726757A148 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SearchApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DD3E5C047E9DDF26A7F5CECD /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SearchApp/Pods-SearchApp-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SearchApp/Pods-SearchApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SearchApp/Pods-SearchApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7165EE9722C04F900074CA11 /* Sources */ = {
@@ -433,9 +513,19 @@
 		};
 		7165EEC822C04F920074CA11 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 76F8EC3FE16FC22DAE5BD45F /* Pods-SearchApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W8X95GK52H;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/MBProgressHUD\"",
+					"\"${PODS_ROOT}/Headers/Public/MeliDevSDK\"",
+					"\"${PODS_ROOT}/\"/**",
+				);
 				INFOPLIST_FILE = SearchApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -449,9 +539,19 @@
 		};
 		7165EEC922C04F920074CA11 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 13D2EA6FAED42EAC04F03BA2 /* Pods-SearchApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W8X95GK52H;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/MBProgressHUD\"",
+					"\"${PODS_ROOT}/Headers/Public/MeliDevSDK\"",
+					"\"${PODS_ROOT}/\"/**",
+				);
 				INFOPLIST_FILE = SearchApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
