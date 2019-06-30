@@ -18,29 +18,53 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Qj8-sm-15p">
-                                <rect key="frame" x="0.0" y="120" width="375" height="547"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="UZX-5T-GdH"/>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="9iQ-yl-8K7"/>
-                                </connections>
-                            </tableView>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="8Lj-Eb-a7E">
-                                <rect key="frame" x="0.0" y="64" width="375" height="56"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0lb-IK-j22">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <subviews>
+                                    <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="8Lj-Eb-a7E">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </searchBar>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Qj8-sm-15p">
+                                        <rect key="frame" x="0.0" y="5" width="375" height="593"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="BYZ-38-t0r" id="UZX-5T-GdH"/>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="9iQ-yl-8K7"/>
+                                        </connections>
+                                    </tableView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="Qj8-sm-15p" firstAttribute="centerX" secondItem="0lb-IK-j22" secondAttribute="centerX" id="4EC-rJ-V6c"/>
+                                    <constraint firstAttribute="trailing" secondItem="Qj8-sm-15p" secondAttribute="trailing" id="RfS-lS-bjt"/>
+                                    <constraint firstItem="8Lj-Eb-a7E" firstAttribute="leading" secondItem="0lb-IK-j22" secondAttribute="leading" id="SOA-Is-FfK"/>
+                                    <constraint firstItem="8Lj-Eb-a7E" firstAttribute="top" secondItem="0lb-IK-j22" secondAttribute="top" id="Swu-bo-5bi"/>
+                                    <constraint firstItem="Qj8-sm-15p" firstAttribute="leading" secondItem="0lb-IK-j22" secondAttribute="leading" id="WTK-v2-ZtP"/>
+                                    <constraint firstItem="8Lj-Eb-a7E" firstAttribute="centerX" secondItem="0lb-IK-j22" secondAttribute="centerX" id="ZMk-6X-53J"/>
+                                    <constraint firstAttribute="bottom" secondItem="Qj8-sm-15p" secondAttribute="bottom" id="h6S-2N-mWJ"/>
+                                    <constraint firstItem="Qj8-sm-15p" firstAttribute="centerY" secondItem="0lb-IK-j22" secondAttribute="centerY" id="iFY-sK-Gnh"/>
+                                    <constraint firstAttribute="trailing" secondItem="8Lj-Eb-a7E" secondAttribute="trailing" id="oCD-OD-EkU"/>
+                                    <constraint firstItem="Qj8-sm-15p" firstAttribute="top" secondItem="8Lj-Eb-a7E" secondAttribute="bottom" id="uhP-wK-U2o"/>
+                                    <constraint firstItem="Qj8-sm-15p" firstAttribute="top" secondItem="0lb-IK-j22" secondAttribute="top" constant="5" id="xVK-ht-GBk"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="8Lj-Eb-a7E"/>
+                                    </mask>
+                                </variation>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Qj8-sm-15p" secondAttribute="bottom" id="4RN-VF-SsM"/>
-                            <constraint firstItem="8Lj-Eb-a7E" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="8RG-2m-TrM"/>
-                            <constraint firstItem="8Lj-Eb-a7E" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="HO4-Kc-90K"/>
-                            <constraint firstItem="Qj8-sm-15p" firstAttribute="top" secondItem="8Lj-Eb-a7E" secondAttribute="bottom" id="HXo-13-BKL"/>
-                            <constraint firstAttribute="trailing" secondItem="8Lj-Eb-a7E" secondAttribute="trailing" id="KxH-IS-cRj"/>
-                            <constraint firstItem="Qj8-sm-15p" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="MPO-td-fxt"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Qj8-sm-15p" secondAttribute="trailing" id="qQ1-4T-qH0"/>
+                            <constraint firstItem="0lb-IK-j22" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="7Zt-Ja-Mve"/>
+                            <constraint firstItem="0lb-IK-j22" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="CN2-mm-nba"/>
+                            <constraint firstItem="0lb-IK-j22" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="EaF-UY-viB"/>
+                            <constraint firstItem="0lb-IK-j22" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" id="EyF-mz-vg5"/>
+                            <constraint firstItem="0lb-IK-j22" firstAttribute="height" secondItem="6Tk-OE-BBY" secondAttribute="height" id="MYJ-jd-cu4"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="0lb-IK-j22" secondAttribute="bottom" id="caz-sg-eH8"/>
+                            <constraint firstItem="0lb-IK-j22" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="jUk-ZI-qxk"/>
+                            <constraint firstItem="0lb-IK-j22" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="mwH-mj-WtN"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -65,7 +89,7 @@
         <!--Navigation Controller-->
         <scene sceneID="bbL-Ga-bNA">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="BiQ-3J-WW9" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" hidesBarsOnSwipe="YES" hidesBarsWhenVerticallyCompact="YES" id="BiQ-3J-WW9" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="jbo-Zi-dsc">

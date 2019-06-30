@@ -37,15 +37,41 @@ static NSString * REDIRECT_URL_VALUE = @"https://www.example.com";
     
     if ([self initMeli]) {
         
-        self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        self.HUD.layer.zPosition = 1;
+//        self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//        self.HUD.layer.zPosition = 1;
         
         [self makeGetRequestWithLoops:10]; // Quantity of elements to search
         
-        self.navigationItem.title = @"Test SearchBar";
-        //    self.navigationController.navigationBar.prefersLargeTitles = YES;
+        self.navigationItem.title = @"Search Test";
+        self.navigationController.navigationBar.prefersLargeTitles = YES;
+        self.navigationController.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAutomatic;
+        [self.navigationController.toolbar setHidden:TRUE];
+        
+# pragma mark - Implements UISearchController
+        self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+        self.searchController.searchResultsUpdater = self;
+        self.searchController.delegate = self;
+        self.searchController.searchBar.delegate = self;
+        
+        self.searchController.hidesNavigationBarDuringPresentation = NO;
+        self.searchController.dimsBackgroundDuringPresentation = YES;
+        self.searchController.obscuresBackgroundDuringPresentation = NO;
+        self.searchController.searchBar.placeholder = @"Buscar Productos";
+        
+        [self.searchController.searchBar sizeToFit];
+        
+//        self.tableView.tableHeaderView = self.searchController.searchBar;
+        
+        self.navigationItem.titleView = self.searchController.searchBar;
+        self.definesPresentationContext = YES;
+//        self.navigationItem.searchController = self.searchController;
+
+//        self.definesPresentationContext = YES;
+        
+        
         
         self.elementos = [NSMutableArray arrayWithArray:@[@"Miguel",@"Erik",@"Pedro",@"Victor",@"Juanpe",@"Javi",@"Sendoa"]];
+        self.elementosFiltrados = [NSMutableArray arrayWithArray:self.elementos];
         
         self.tableView.dataSource = self;
         self.tableView.delegate = self;
@@ -57,7 +83,7 @@ static NSString * REDIRECT_URL_VALUE = @"https://www.example.com";
     }
 }
 
-#pragma Mark: SDK Meli
+# pragma mark - SDK Meli
 - (BOOL) initMeli {
     NSError *error;
     
@@ -79,8 +105,7 @@ static NSString * REDIRECT_URL_VALUE = @"https://www.example.com";
     
 //    /items?ids=MLA778950852,MLA778950853
     
-    for ( int i = 1
-         ; i < Loops; i++) {
+    for ( int i = 1; i < Loops; i++) {
         numberForItems += i;
         NSString* newInt = [NSString stringWithFormat:@"%li", numberForItems];
         path = [NSString stringWithFormat:@"%@,MLA%@", path, newInt];
@@ -106,7 +131,6 @@ static NSString * REDIRECT_URL_VALUE = @"https://www.example.com";
 }
 
 # pragma mark - methods
-
 - (void) resultToTableViewArray:(NSString*)result {
     
     // Convert to JSON object:
@@ -128,19 +152,16 @@ static NSString * REDIRECT_URL_VALUE = @"https://www.example.com";
 
 
 # pragma mark - UITableViewDataSource: UITableView
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return self.elementos.count;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.elementosFiltrados.count;
 }
 
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     cellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -148,15 +169,14 @@ static NSString * REDIRECT_URL_VALUE = @"https://www.example.com";
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    cell.textLabel.text = self.elementos[indexPath.row];
+    cell.textLabel.text = self.elementosFiltrados[indexPath.row];
     return cell;
 }
 
 
 # pragma mark - UITableViewDelegate: UITableView
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 //    NSDictionary *credit = [self.creditosPermitidos objectAtIndex:indexPath.row];
 //    NSArray *copyOfLegends = [SRioCommonMethods dictionaryArrayFromDictionary:[self.prestamosPermitidos objectForKey:tagListaLeyendas] withItemKey:tagLeyenda];
 //
@@ -185,5 +205,44 @@ static NSString * REDIRECT_URL_VALUE = @"https://www.example.com";
     return 50;
 }
 
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+    
+    if (velocity.y > 0) {
+        [UIView animateWithDuration:2.5 delay:0 options:UIViewAnimationOptionTransitionCurlUp  animations:^{
+            [self.navigationController setNavigationBarHidden:YES animated:true];
+            NSLog(@"HIDE NavController");
+        } completion:nil];
+    } else {
+        [UIView animateWithDuration:2.5 delay:0 options:UIViewAnimationOptionTransitionCurlUp animations:^{
+            [self.navigationController setNavigationBarHidden:NO animated:true];
+            NSLog(@"UnHIDE NavController");
+        } completion:nil];
+    }
+}
+
 # pragma mark - UISearchBarDelegate
+- (void)updateSearchResultsForSearchController:(nonnull UISearchController *)searchController {
+    
+    NSString *searchString = searchController.searchBar.text;
+    if (!searchString.length) {
+        self.elementosFiltrados = self.elementos;
+        
+    } else {
+        
+        // strip out all the leading and trailing spaces
+        NSString *strippedString = [searchString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        NSPredicate* predicate = [NSPredicate predicateWithFormat:@"SELF contains[cd] %@", strippedString];
+        NSArray *filtered = [self.elementos filteredArrayUsingPredicate:predicate];
+        self.elementosFiltrados = [NSMutableArray arrayWithArray:filtered];
+
+    }
+//    self.tableView.tableHeaderView = nil;
+    [self.tableView reloadData];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
+    [self updateSearchResultsForSearchController:self.searchController];
+}
+
+
 @end
