@@ -15,6 +15,7 @@
 		7165EEAE22C04F910074CA11 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7165EEAD22C04F910074CA11 /* main.m */; };
 		7165EEB822C04F920074CA11 /* SearchAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7165EEB722C04F920074CA11 /* SearchAppTests.m */; };
 		7165EEC322C04F920074CA11 /* SearchAppUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7165EEC222C04F920074CA11 /* SearchAppUITests.m */; };
+		716CD56D22C997CA009E7175 /* SearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 716CD56B22C997CA009E7175 /* SearchTableViewController.m */; };
 		7197236222C59721001DC5B4 /* libAFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7197236122C59721001DC5B4 /* libAFNetworking.a */; };
 		7197236422C59726001DC5B4 /* libMBProgressHUD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7197236322C59726001DC5B4 /* libMBProgressHUD.a */; };
 		7197236622C59729001DC5B4 /* libMeliDevSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7197236522C59729001DC5B4 /* libMeliDevSDK.a */; };
@@ -55,6 +56,8 @@
 		7165EEBE22C04F920074CA11 /* SearchAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SearchAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7165EEC222C04F920074CA11 /* SearchAppUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchAppUITests.m; sourceTree = "<group>"; };
 		7165EEC422C04F920074CA11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		716CD56B22C997CA009E7175 /* SearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTableViewController.m; sourceTree = "<group>"; };
+		716CD56C22C997CA009E7175 /* SearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTableViewController.h; sourceTree = "<group>"; };
 		7197236122C59721001DC5B4 /* libAFNetworking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libAFNetworking.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7197236322C59726001DC5B4 /* libMBProgressHUD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMBProgressHUD.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7197236522C59729001DC5B4 /* libMeliDevSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMeliDevSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,12 +127,10 @@
 		7165EE9D22C04F900074CA11 /* SearchApp */ = {
 			isa = PBXGroup;
 			children = (
+				716CD56E22C997D4009E7175 /* Views */,
+				716CD56A22C997C0009E7175 /* Controllers */,
 				7165EE9E22C04F900074CA11 /* AppDelegate.h */,
 				7165EE9F22C04F900074CA11 /* AppDelegate.m */,
-				7165EEA122C04F900074CA11 /* ViewController.h */,
-				7165EEA222C04F900074CA11 /* ViewController.m */,
-				7165EEA422C04F900074CA11 /* Main.storyboard */,
-				7165EEA922C04F910074CA11 /* LaunchScreen.storyboard */,
 				7165EEAC22C04F910074CA11 /* Info.plist */,
 				7165EEAD22C04F910074CA11 /* main.m */,
 			);
@@ -152,6 +153,27 @@
 				7165EEC422C04F920074CA11 /* Info.plist */,
 			);
 			path = SearchAppUITests;
+			sourceTree = "<group>";
+		};
+		716CD56A22C997C0009E7175 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				7165EEA122C04F900074CA11 /* ViewController.h */,
+				7165EEA222C04F900074CA11 /* ViewController.m */,
+				716CD56C22C997CA009E7175 /* SearchTableViewController.h */,
+				716CD56B22C997CA009E7175 /* SearchTableViewController.m */,
+			);
+			name = Controllers;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		716CD56E22C997D4009E7175 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7165EEA422C04F900074CA11 /* Main.storyboard */,
+				7165EEA922C04F910074CA11 /* LaunchScreen.storyboard */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		CFE6BF35CE0DB85ACB69F2C4 /* Frameworks */ = {
@@ -341,6 +363,7 @@
 				7165EEA322C04F900074CA11 /* ViewController.m in Sources */,
 				7165EEAE22C04F910074CA11 /* main.m in Sources */,
 				7165EEA022C04F900074CA11 /* AppDelegate.m in Sources */,
+				716CD56D22C997CA009E7175 /* SearchTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

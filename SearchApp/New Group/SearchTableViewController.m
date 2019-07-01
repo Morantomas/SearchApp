@@ -1,12 +1,12 @@
 //
-//  ViewController.m
+//  SearchTableViewController.m
 //  SearchApp
 //
-//  Created by Tomas Moran on 23/06/2019.
+//  Created by Tomas Moran on 30/06/2019.
 //  Copyright © 2019 Tomas Moran. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "SearchTableViewController.h"
 #import "MeliDevLoginViewController.h"
 #import "Meli.h"
 #import "MeliDevIdentity.h"
@@ -18,7 +18,7 @@
 static NSString * CLIENT_ID_VALUE = @"5197208004815569";
 static NSString * REDIRECT_URL_VALUE = @"https://www.example.com";
 
-@interface ViewController () {
+@interface SearchTableViewController () {
     NSString *cellIdentifier;
 }
 
@@ -29,48 +29,28 @@ static NSString * REDIRECT_URL_VALUE = @"https://www.example.com";
 
 @end
 
-@implementation ViewController
+
+@implementation SearchTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+    
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+//     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     if ([self initMeli]) {
         
-//        self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//        self.HUD.layer.zPosition = 1;
+        //        self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        //        self.HUD.layer.zPosition = 1;
         
         [self makeGetRequestWithLoops:10]; // Quantity of elements to search
         
-        self.navigationItem.title = @"Search Test";
-        self.navigationController.navigationBar.prefersLargeTitles = YES;
-        self.navigationController.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAutomatic;
-        [self.navigationController.toolbar setHidden:TRUE];
+        [self initSearchController];
         
-# pragma mark - Implements UISearchController
-        self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-        self.searchController.searchResultsUpdater = self;
-        self.searchController.delegate = self;
-        self.searchController.searchBar.delegate = self;
-        
-        self.searchController.hidesNavigationBarDuringPresentation = NO;
-        self.searchController.dimsBackgroundDuringPresentation = YES;
-        self.searchController.obscuresBackgroundDuringPresentation = NO;
-        self.searchController.searchBar.placeholder = @"Buscar Productos";
-        
-        [self.searchController.searchBar sizeToFit];
-        
-//        self.tableView.tableHeaderView = self.searchController.searchBar;
-        
-        self.navigationItem.titleView = self.searchController.searchBar;
-        self.definesPresentationContext = YES;
-//        self.navigationItem.searchController = self.searchController;
-
-//        self.definesPresentationContext = YES;
-        
-        
-        
-        self.elementos = [NSMutableArray arrayWithArray:@[@"Miguel",@"Erik",@"Pedro",@"Victor",@"Juanpe",@"Javi",@"Sendoa"]];
+        self.elementos = [NSMutableArray arrayWithArray:@[@"Miguel",@"Erik",@"Pedro",@"Victor",@"Juanpe",@"Javi",@"Sendoa",@"Miguel",@"Erik",@"Pedro",@"Victor",@"Juanpe",@"Javi",@"Sendoa",@"Miguel",@"Erik",@"Pedro",@"Victor",@"Juanpe",@"Javi",@"Sendoa",@"Miguel",@"Erik",@"Pedro",@"Victor",@"Juanpe",@"Javi",@"Sendoa"]];
         self.elementosFiltrados = [NSMutableArray arrayWithArray:self.elementos];
         
         self.tableView.dataSource = self;
@@ -102,8 +82,7 @@ static NSString * REDIRECT_URL_VALUE = @"https://www.example.com";
     
     long numberForItems = 778950852;
     NSString *path = @"/items?ids=MLA778950852";
-    
-//    /items?ids=MLA778950852,MLA778950853
+    //    /items?ids=MLA778950852,MLA778950853
     
     for ( int i = 1; i < Loops; i++) {
         numberForItems += i;
@@ -140,8 +119,7 @@ static NSString * REDIRECT_URL_VALUE = @"https://www.example.com";
     self.elementos = [NSMutableArray arrayWithArray:jsonObject];
 }
 
-- (void)searchFilter:(NSString*)searchText
-{
+- (void)searchFilter:(NSString*)searchText {
     NSPredicate *predicateSearch = [NSPredicate
                                     predicateWithFormat:@"SELF contains[cd] %@",
                                     searchText];
@@ -149,9 +127,32 @@ static NSString * REDIRECT_URL_VALUE = @"https://www.example.com";
     self.elementosFiltrados = [NSMutableArray arrayWithArray:[self.elementos filteredArrayUsingPredicate:predicateSearch]];
 }
 
+# pragma mark - Implements UISearchController
+- (void) initSearchController {
+    
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.delegate = self;
+    self.searchController.searchBar.delegate = self;
+    self.searchController.searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
+    self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.searchController.obscuresBackgroundDuringPresentation = NO;
+    self.searchController.searchBar.placeholder = @"Buscar Productos";
+    
+    [self.searchController.searchBar sizeToFit];
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 11.0) {
+        self.navigationItem.searchController = self.searchController;
+        self.navigationItem.hidesSearchBarWhenScrolling = TRUE;
+    } else { self.tableView.tableHeaderView = self.searchController.searchBar; }
+    
+    [self.searchController.searchBar becomeFirstResponder];
+    self.definesPresentationContext = YES;
+}
 
+#pragma mark - TableView - DataSource/Delegate
 
-# pragma mark - UITableViewDataSource: UITableView
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
@@ -173,51 +174,33 @@ static NSString * REDIRECT_URL_VALUE = @"https://www.example.com";
     return cell;
 }
 
-
-# pragma mark - UITableViewDelegate: UITableView
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    NSDictionary *credit = [self.creditosPermitidos objectAtIndex:indexPath.row];
-//    NSArray *copyOfLegends = [SRioCommonMethods dictionaryArrayFromDictionary:[self.prestamosPermitidos objectForKey:tagListaLeyendas] withItemKey:tagLeyenda];
-//
-//    SetupCreditViewController *setupCreditVC = [[SetupCreditViewController alloc] init];
-//    if ([[credit valueForKey:@"indicadorUVA"] isEqualToString:@"S"]) {
-//        setupCreditVC.isUVACredit = YES;
-//    } else {
-//        setupCreditVC.isUVACredit = NO;
-//    }
-//    setupCreditVC.impDispPrest = [[self.solicitudCrediticia objectForKey:tagDatosCalifCred] objectForKey:tagImpDispPrest];
-//    setupCreditVC.creditData = credit;
-//    setupCreditVC.generalCreditData = self.prestamosPermitidos;
-//    setupCreditVC.leyenda = [self getCaptionForSetupPage];
-//    setupCreditVC.creditCopyOfLegends = copyOfLegends;
-//    setupCreditVC.accountAssociatedToCredit = self.accountAssociatedToCredit;
-//    setupCreditVC.leyendaLinkSeguro = self.leyendaLinkSeguro;
-//    setupCreditVC.revealViewController = self.revealViewController;
-//    [self.navigationController pushViewController:setupCreditVC animated:YES];
-//
-//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    //    NSDictionary *credit = [self.creditosPermitidos objectAtIndex:indexPath.row];
+    //    NSArray *copyOfLegends = [SRioCommonMethods dictionaryArrayFromDictionary:[self.prestamosPermitidos objectForKey:tagListaLeyendas] withItemKey:tagLeyenda];
+    //
+    //    SetupCreditViewController *setupCreditVC = [[SetupCreditViewController alloc] init];
+    //    if ([[credit valueForKey:@"indicadorUVA"] isEqualToString:@"S"]) {
+    //        setupCreditVC.isUVACredit = YES;
+    //    } else {
+    //        setupCreditVC.isUVACredit = NO;
+    //    }
+    //    setupCreditVC.impDispPrest = [[self.solicitudCrediticia objectForKey:tagDatosCalifCred] objectForKey:tagImpDispPrest];
+    //    setupCreditVC.creditData = credit;
+    //    setupCreditVC.generalCreditData = self.prestamosPermitidos;
+    //    setupCreditVC.leyenda = [self getCaptionForSetupPage];
+    //    setupCreditVC.creditCopyOfLegends = copyOfLegends;
+    //    setupCreditVC.accountAssociatedToCredit = self.accountAssociatedToCredit;
+    //    setupCreditVC.leyendaLinkSeguro = self.leyendaLinkSeguro;
+    //    setupCreditVC.revealViewController = self.revealViewController;
+    //    [self.navigationController pushViewController:setupCreditVC animated:YES];
+    //
+    //    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 50;
-}
-
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
-    
-    if (velocity.y > 0) {
-        [UIView animateWithDuration:2.5 delay:0 options:UIViewAnimationOptionTransitionCurlUp  animations:^{
-            [self.navigationController setNavigationBarHidden:YES animated:true];
-            NSLog(@"HIDE NavController");
-        } completion:nil];
-    } else {
-        [UIView animateWithDuration:2.5 delay:0 options:UIViewAnimationOptionTransitionCurlUp animations:^{
-            [self.navigationController setNavigationBarHidden:NO animated:true];
-            NSLog(@"UnHIDE NavController");
-        } completion:nil];
-    }
+    return 75;
 }
 
 # pragma mark - UISearchBarDelegate
@@ -234,9 +217,8 @@ static NSString * REDIRECT_URL_VALUE = @"https://www.example.com";
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"SELF contains[cd] %@", strippedString];
         NSArray *filtered = [self.elementos filteredArrayUsingPredicate:predicate];
         self.elementosFiltrados = [NSMutableArray arrayWithArray:filtered];
-
+        
     }
-//    self.tableView.tableHeaderView = nil;
     [self.tableView reloadData];
 }
 
@@ -244,5 +226,15 @@ static NSString * REDIRECT_URL_VALUE = @"https://www.example.com";
     [self updateSearchResultsForSearchController:self.searchController];
 }
 
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end
